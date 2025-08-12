@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Tahoma:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Tahoma', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #236B8E;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Windows XP Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ECE9D8;
+  border: 1px solid #ACA899;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D0C8;
+  border: 1px solid #ACA899;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C1C1C1;
+}
+
+/* Windows XP Button Styles */
+.xp-button {
+  background: linear-gradient(to bottom, #ECE9D8 0%, #D4D0C8 100%);
+  border: 1px solid #ACA899;
+  border-radius: 3px;
+  padding: 4px 12px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px #FFFFFF inset, -1px -1px 0px #808080 inset;
+}
+
+.xp-button:hover {
+  background: linear-gradient(to bottom, #FFFFFF 0%, #ECE9D8 100%);
+}
+
+.xp-button:active {
+  background: linear-gradient(to bottom, #D4D0C8 0%, #ACA899 100%);
+  box-shadow: -1px -1px 0px #FFFFFF inset, 1px 1px 0px #808080 inset;
+}
+
+/* Windows XP Window Styles */
+.xp-window {
+  background: #ECE9D8;
+  border: 2px solid #0054E3;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  font-family: 'Tahoma', sans-serif;
+}
+
+.xp-window-titlebar {
+  background: linear-gradient(to right, #0054E3 0%, #4A90E2 100%);
+  color: white;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+}
+
+.xp-window-content {
+  padding: 8px;
+  background: #ECE9D8;
+  border-radius: 0 0 6px 6px;
+}
+
+/* Windows XP Icon Styles */
+.xp-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  transition: background-color 0.1s;
+  text-align: center;
+  width: 80px;
+  margin: 8px;
+}
+
+.xp-icon:hover {
+  background: rgba(0, 84, 227, 0.1);
+}
+
+.xp-icon.selected {
+  background: rgba(0, 84, 227, 0.2);
+}
+
+.xp-icon img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.xp-icon span {
+  font-size: 10px;
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  line-height: 1.2;
+}

@@ -1,0 +1,54 @@
+.ttt-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ttt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ttt-scoreboard {
+  display: flex;
+  gap: 16px;
+}
+
+.ttt-score span {
+  margin-right: 6px;
+}
+
+.ttt-status {
+  font-weight: bold;
+}
+
+.ttt-board {
+  width: 240px;
+  height: 240px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.ttt-square {
+  background: #e6f0ff;
+  border: 2px solid #6893ff;
+  border-radius: 6px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #103a8d;
+  cursor: pointer;
+}
+
+.ttt-square.filled {
+  background: #d1e2ff;
+}
+
+.ttt-actions {
+  display: flex;
+  gap: 10px;
+}
+
+

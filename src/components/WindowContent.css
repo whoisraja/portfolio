@@ -1,0 +1,241 @@
+.window-content {
+  height: 100%;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.content-section {
+  margin-bottom: 20px;
+}
+
+.content-section h3 {
+  color: #0054E3;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #0054E3;
+  padding-bottom: 4px;
+}
+
+/* About section */
+.about-header {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.about-photo {
+  width: 160px;
+  height: 200px; /* portrait ratio */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ACA899;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #fff;
+}
+
+.about-photo-fallback {
+  width: 160px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 2px solid #ACA899;
+  background: linear-gradient(135deg, #dfe9ff, #bcd0ff);
+  color: #0b3da6;
+  font-weight: bold;
+  font-size: 24px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+}
+
+/* Skills Section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.skill-category {
+  background: #FFFFFF;
+  border: 1px solid #ACA899;
+  border-radius: 4px;
+  padding: 12px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.skill-category h4 {
+  color: #0054E3;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #D4D0C8;
+  padding-bottom: 4px;
+}
+
+.skill-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-category li {
+  padding: 4px 0;
+  font-size: 12px;
+  color: #000;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.skill-category li:last-child {
+  border-bottom: none;
+}
+
+/* Projects Section */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  background: #FFFFFF;
+  border: 1px solid #ACA899;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.project-card h4 {
+  color: #0054E3;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.project-card p {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.project-tech {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.project-links {
+  display: flex;
+  gap: 8px;
+}
+
+.project-links .xp-button {
+  font-size: 10px;
+  padding: 3px 8px;
+}
+
+/* Certifications Section */
+.certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.certification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #FFFFFF;
+  border: 1px solid #ACA899;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cert-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F0F0;
+  border-radius: 4px;
+  border: 1px solid #D4D0C8;
+}
+
+.cert-details {
+  flex: 1;
+}
+
+.cert-details h4 {
+  color: #0054E3;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.cert-details p {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.cert-date {
+  font-size: 11px;
+  color: #888;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.cert-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cert-actions .xp-button {
+  font-size: 10px;
+  padding: 3px 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .certification-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .cert-icon {
+    margin-bottom: 8px;
+  }
+  
+  .project-links,
+  .cert-actions {
+    flex-direction: column;
+  }
+  
+  .project-links .xp-button,
+  .cert-actions .xp-button {
+    text-align: center;
+  }
+}

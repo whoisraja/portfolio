@@ -1,0 +1,218 @@
+/* Windows XP boot-like loading screen */
+/* Windows XP logon/lock-style blue screen */
+.loading-screen {
+  width: 100vw;
+  height: 100vh;
+  background: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'>\
+    <defs>\
+      <linearGradient id='blue' x1='0' y1='0' x2='0' y2='1'>\
+        <stop offset='0%' stop-color='%230b3da6'/>\
+        <stop offset='100%' stop-color='%23056bd6'/>\
+      </linearGradient>\
+    </defs>\
+    <rect width='1920' height='1080' fill='url(%23blue)'/>\
+    <path d='M0,800 C400,700 800,1000 1200,900 C1500,830 1700,880 1920,860 L1920,1080 L0,1080 Z' fill='%231352b3' opacity='0.7'/>\
+  </svg>") center/cover no-repeat fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.2;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, 20px); }
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+  z-index: 10;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.windows-logo {
+  margin-bottom: 30px;
+  animation: none;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.logo-window {
+  width: 160px;
+  height: 110px;
+  margin: 0 auto 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+}
+
+@keyframes windowGlow {
+  from { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+  to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+}
+
+.window-pane {
+  background: linear-gradient(135deg, #00a2ff 0%, #0072c6 100%);
+  border-radius: 2px;
+}
+
+.window-pane:nth-child(1) { animation-delay: 0s; }
+.window-pane:nth-child(2) { animation-delay: 0.2s; }
+.window-pane:nth-child(3) { animation-delay: 0.4s; }
+.window-pane:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes panePulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.logo-text {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0, 136, 255, 0.6);
+  letter-spacing: 1px;
+}
+
+.loading-text {
+  margin-bottom: 20px;
+  animation: none;
+}
+
+@keyframes textSlideIn {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.step-text {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  min-height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+
+.progress-bar {
+  width: 240px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff2a 0%, #43ff64 100%);
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  animation: progressShine 1.5s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.progress-text {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  min-width: 40px;
+}
+
+.loading-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  opacity: 0.8;
+  animation: footerFadeIn 1s ease-in 0.5s both;
+}
+
+@keyframes footerFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 0.8; transform: translateY(0); }
+}
+
+.footer-text {
+  font-weight: bold;
+}
+
+.footer-build {
+  opacity: 0.7;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .logo-window {
+    width: 80px;
+    height: 60px;
+  }
+  
+  .logo-text {
+    font-size: 18px;
+  }
+  
+  .step-text {
+    font-size: 14px;
+  }
+  
+  .progress-bar {
+    width: 200px;
+    height: 16px;
+  }
+  
+  .progress-text {
+    font-size: 12px;
+  }
+}
