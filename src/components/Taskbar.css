@@ -274,7 +274,8 @@
   .taskbar-window {
     padding: 3px 6px;
     font-size: 9px;
-    min-width: 80px;
+    min-width: 64px;
+    max-width: 120px;
   }
   
   .tray-time {

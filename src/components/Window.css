@@ -145,4 +145,13 @@
   .xp-window-content {
     padding: 6px;
   }
+
+  /* Make non-maximized windows fill usable space better on mobile */
+  .window-container:not(.maximized) {
+    left: 8px !important;
+    right: 8px !important;
+    width: calc(100vw - 16px) !important;
+    height: calc(100vh - 46px) !important; /* account for taskbar */
+    top: 8px !important;
+  }
 }

@@ -90,14 +90,20 @@ const Desktop: React.FC = () => {
     }
 
     // Open new window
+    const viewportWidth = globalThis.innerWidth || 800;
+    const viewportHeight = globalThis.innerHeight || 600;
+    const isMobile = viewportWidth <= 768;
+    const baseWidth = Math.min(600, viewportWidth - 40);
+    const baseHeight = Math.min(400, viewportHeight - 80);
+
     const newWindow: WindowType = {
       id: iconId,
       title: iconId.charAt(0).toUpperCase() + iconId.slice(1),
       content: iconId,
-      position: { x: 100 + openWindows.length * 30, y: 50 + openWindows.length * 30 },
-      size: { width: 600, height: 400 },
+      position: { x: Math.max(10, (viewportWidth - baseWidth) / 2) + openWindows.length * 16, y: 40 + openWindows.length * 16 },
+      size: { width: baseWidth, height: baseHeight },
       isMinimized: false,
-      isMaximized: false
+      isMaximized: isMobile
     };
 
     setOpenWindows(prev => [...prev, newWindow]);
