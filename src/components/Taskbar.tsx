@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { WindowType } from '../types/WindowType';
 import './Taskbar.css';
+import { useSettings } from './SettingsContext';
 
 interface TaskbarProps {
   openWindows: WindowType[];
@@ -8,6 +9,7 @@ interface TaskbarProps {
   onWindowClick: (windowId: string) => void;
   onWindowMinimize: (windowId: string) => void;
   onStartItemClick?: (itemId: string) => void;
+  onShowDesktop?: () => void;
 }
 
 const Taskbar: React.FC<TaskbarProps> = ({
@@ -15,10 +17,12 @@ const Taskbar: React.FC<TaskbarProps> = ({
   activeWindow,
   onWindowClick,
   onWindowMinimize,
-  onStartItemClick
+  onStartItemClick,
+  onShowDesktop
 }) => {
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const { use24HourClock, pinnedIds, recentIds, togglePinned, accentColor, setAccentColor } = useSettings();
 
   // Update time every minute
   React.useEffect(() => {
@@ -33,7 +37,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true
+      hour12: !use24HourClock
     });
   };
 
@@ -89,6 +93,10 @@ const Taskbar: React.FC<TaskbarProps> = ({
         ))}
       </div>
 
+      <button className="show-desktop" title="Show Desktop" onClick={() => onShowDesktop?.()}>
+        ⊞
+      </button>
+
       <div className="taskbar-tray">
         <div className="tray-item">
           <span className="tray-icon">🔊</span>
@@ -110,40 +118,49 @@ const Taskbar: React.FC<TaskbarProps> = ({
               <div className="user-name">Portfolio User</div>
             </div>
           </div>
-          <div className="start-menu-items">
-            <button className="menu-item" onClick={() => openFromStart('my-computer')}>
-              <span className="menu-icon">🖥️</span>
-              <span className="menu-text">My Computer</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('recycle-bin')}>
-              <span className="menu-icon">♻️</span>
-              <span className="menu-text">Recycle Bin</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('projects')}>
-              <span className="menu-icon">📁</span>
-              <span className="menu-text">Projects</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('skills')}>
-              <span className="menu-icon">📁</span>
-              <span className="menu-text">Skills</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('certifications')}>
-              <span className="menu-icon">📁</span>
-              <span className="menu-text">Certifications</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('about')}>
-              <span className="menu-icon">ℹ️</span>
-              <span className="menu-text">About</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('contact')}>
-              <span className="menu-icon">✉️</span>
-              <span className="menu-text">Contact</span>
-            </button>
-            <button className="menu-item" onClick={() => openFromStart('game')}>
-              <span className="menu-icon">🎮</span>
-              <span className="menu-text">Tic‑Tac‑Toe</span>
-            </button>
-            <div className="menu-separator"></div>
+
+          {/* Start menu body with three columns: Pinned, All Apps, Recents */}
+          <div className="start-body">
+            <div>
+              <div className="start-section-title">Pinned</div>
+              {pinnedIds.map(id => (
+                <div key={id} className="menu-item" onClick={() => { openFromStart(id); togglePinned(id); }}>
+                  <span className="menu-icon">📌</span>
+                  <span className="menu-text" style={{ flex: 1, textTransform: 'capitalize' }}>{id.replace('-', ' ')}</span>
+                  <span className="menu-pin">Unpin</span>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <div className="start-section-title">All Apps</div>
+              {['settings','my-computer','recycle-bin','projects','skills','certifications','about','contact','game','dont-open','terminal'].map(id => (
+                <div key={id} className="menu-item" onClick={() => openFromStart(id)}>
+                  <span className="menu-icon">📁</span>
+                  <span className="menu-text" style={{ textTransform: 'capitalize' }}>{id.replace('-', ' ')}</span>
+                  <button className="xp-button" style={{ fontSize: 9 }} onClick={(e) => { e.stopPropagation(); togglePinned(id); }}>Pin</button>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <div className="start-section-title">Recent</div>
+              {recentIds.length === 0 && <div className="menu-item" style={{ opacity: 0.7 }}>No recent items</div>}
+              {recentIds.map(id => (
+                <div key={id} className="menu-item" onClick={() => openFromStart(id)}>
+                  <span className="menu-icon">🕓</span>
+                  <span className="menu-text" style={{ textTransform: 'capitalize' }}>{id.replace('-', ' ')}</span>
+                </div>
+              ))}
+
+              <div className="menu-separator" />
+              <div className="start-section-title">Accent</div>
+              <input type="color" value={accentColor} onChange={(e) => setAccentColor(e.target.value)} />
+            </div>
+          </div>
+
+          <div style={{ padding: 8 }}>
+            <div className="menu-separator" />
             <div className="menu-item">
               <span className="menu-icon">🚪</span>
               <span className="menu-text">Log Off</span>

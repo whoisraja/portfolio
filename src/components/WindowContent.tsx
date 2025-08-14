@@ -1,6 +1,9 @@
 import React from 'react';
 import './WindowContent.css';
 import TicTacToe from './TicTacToe';
+import SettingsPanel from './settings/SettingsPanel';
+import DontOpen from './fun/DontOpen';
+import Terminal from './apps/Terminal';
 
 interface WindowContentProps {
   content: string;
@@ -213,6 +216,12 @@ const WindowContent: React.FC<WindowContentProps> = ({ content }) => {
         return renderAbout();
       case 'contact':
         return renderContact();
+      case 'settings':
+        return <SettingsPanel />;
+      case "dont-open":
+        return <DontOpen />;
+      case 'terminal':
+        return <Terminal />;
       default:
         return <div>Content not found</div>;
     }

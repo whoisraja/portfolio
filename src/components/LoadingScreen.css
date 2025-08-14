@@ -3,17 +3,7 @@
 .loading-screen {
   width: 100vw;
   height: 100vh;
-  background: url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'>\
-    <defs>\
-      <linearGradient id='blue' x1='0' y1='0' x2='0' y2='1'>\
-        <stop offset='0%' stop-color='%230b3da6'/>\
-        <stop offset='100%' stop-color='%23056bd6'/>\
-      </linearGradient>\
-    </defs>\
-    <rect width='1920' height='1080' fill='url(%23blue)'/>\
-    <path d='M0,800 C400,700 800,1000 1200,900 C1500,830 1700,880 1920,860 L1920,1080 L0,1080 Z' fill='%231352b3' opacity='0.7'/>\
-  </svg>") center/cover no-repeat fixed;
+  background: linear-gradient(180deg, #0a2a6b 0%, #0a2a6b 60%, #0b3da6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,10 +40,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.windows-logo {
-  margin-bottom: 30px;
-  animation: none;
-}
+.windows-logo { display: none; }
 
 @keyframes logoFloat {
   0%, 100% { transform: translateY(0); }
@@ -98,10 +85,7 @@
   letter-spacing: 1px;
 }
 
-.loading-text {
-  margin-bottom: 20px;
-  animation: none;
-}
+.loading-text { display: none; }
 
 @keyframes textSlideIn {
   from { opacity: 0; transform: translateX(-50px); }
@@ -119,12 +103,7 @@
   justify-content: center;
 }
 
-.progress-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  justify-content: center;
-}
+.progress-container { display: none; }
 
 .progress-bar {
   width: 240px;
@@ -177,6 +156,55 @@
   font-size: 12px;
   opacity: 0.8;
   animation: footerFadeIn 1s ease-in 0.5s both;
+}
+/* Classic Windows XP boot bar */
+.xp-boot-area {
+  position: absolute;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.xp-boot-logo {
+  font-family: 'Tahoma', sans-serif;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.xp-boot-bar {
+  width: 340px;
+  height: 18px;
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+}
+
+.xp-boot-dots {
+  position: absolute;
+  top: 4px;
+  left: -120px;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 12px;
+  animation: xpDots 1.4s linear infinite;
+}
+
+.xp-dot {
+  width: 80px;
+  height: 10px;
+  background: linear-gradient(180deg, #86c6ff 0%, #4aa3ff 100%);
+  border-radius: 2px;
+}
+
+@keyframes xpDots {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(460px); }
 }
 
 @keyframes footerFadeIn {

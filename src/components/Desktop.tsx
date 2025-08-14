@@ -4,8 +4,10 @@ import DesktopIcon from './DesktopIcon';
 import Window from './Window';
 import Taskbar from './Taskbar';
 import { WindowType } from '../types/WindowType';
+import { useSettings } from './SettingsContext';
 
 const Desktop: React.FC = () => {
+  const { wallpaperUrl, addRecent } = useSettings();
   const [openWindows, setOpenWindows] = useState<WindowType[]>([]);
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
 
@@ -47,6 +49,24 @@ const Desktop: React.FC = () => {
       position: { x: 120, y: 20 }
     },
     {
+      id: 'settings',
+      name: 'Settings',
+      icon: '⚙️',
+      position: { x: 120, y: 320 }
+    },
+    {
+      id: 'dont-open',
+      name: "Don't Open !!",
+      icon: '💀',
+      position: { x: 220, y: 20 }
+    },
+    {
+      id: 'terminal',
+      name: 'Terminal',
+      icon: '🖳',
+      position: { x: 220, y: 120 }
+    },
+    {
       id: 'contact',
       name: 'Contact',
       icon: '✉️',
@@ -81,6 +101,7 @@ const Desktop: React.FC = () => {
     };
 
     setOpenWindows(prev => [...prev, newWindow]);
+    addRecent(iconId);
     setActiveWindow(iconId);
   };
 
@@ -110,6 +131,38 @@ const Desktop: React.FC = () => {
     handleIconClick(itemId);
   };
 
+  const handleTaskbarWindowClick = (windowId: string) => {
+    const clicked = openWindows.find(w => w.id === windowId);
+    if (!clicked) return;
+
+    // If window is minimized, restore it and focus
+    if (clicked.isMinimized) {
+      setOpenWindows(prev => {
+        const restored = prev.map(w => w.id === windowId ? { ...w, isMinimized: false } : w);
+        // Move restored window to front
+        const target = restored.find(w => w.id === windowId)!;
+        return [...restored.filter(w => w.id !== windowId), target];
+      });
+      setActiveWindow(windowId);
+      return;
+    }
+
+    // If already active, toggle minimize
+    if (activeWindow === windowId) {
+      setOpenWindows(prev => prev.map(w => w.id === windowId ? { ...w, isMinimized: true } : w));
+      setActiveWindow(null);
+      return;
+    }
+
+    // Otherwise, bring to front and focus
+    handleWindowFocus(windowId);
+  };
+
+  const handleShowDesktop = () => {
+    setOpenWindows(prev => prev.map(w => ({ ...w, isMinimized: true })));
+    setActiveWindow(null);
+  };
+
   const handleWindowFocus = (windowId: string) => {
     setActiveWindow(windowId);
     // Bring window to front
@@ -132,7 +185,16 @@ const Desktop: React.FC = () => {
   };
 
   return (
-    <div className="desktop">
+    <div
+      className="desktop"
+      style={{
+        backgroundImage: `url(${(wallpaperUrl ?? (process.env.PUBLIC_URL + '/wallpaper.jpg'))})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       {/* Desktop Icons */}
       <div className="desktop-icons">
         {desktopIcons.map(icon => (
@@ -166,9 +228,10 @@ const Desktop: React.FC = () => {
       <Taskbar
         openWindows={openWindows}
         activeWindow={activeWindow}
-        onWindowClick={handleWindowFocus}
+        onWindowClick={handleTaskbarWindowClick}
         onWindowMinimize={handleWindowMinimize}
         onStartItemClick={handleStartItemClick}
+        onShowDesktop={handleShowDesktop}
       />
     </div>
   );

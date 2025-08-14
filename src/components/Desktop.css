@@ -1,25 +1,36 @@
 .desktop {
   width: 100%;
   height: 100%;
-  /* Bliss-like wallpaper using an inline SVG (no external assets needed) */
-  background: url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'>\
-    <defs>\
-      <linearGradient id='sky' x1='0' y1='0' x2='0' y2='1'>\
-        <stop offset='0%' stop-color='%237ec8ff'/>\
-        <stop offset='100%' stop-color='%234aa3ff'/>\
-      </linearGradient>\
-      <linearGradient id='grass' x1='0' y1='0' x2='0' y2='1'>\
-        <stop offset='0%' stop-color='%236fdc6f'/>\
-        <stop offset='100%' stop-color='%233ea93e'/>\
-      </linearGradient>\
-    </defs>\
-    <rect width='1920' height='1080' fill='url(%23sky)'/>\
-    <ellipse cx='1200' cy='1060' rx='1500' ry='520' fill='url(%23grass)'/>\
-    <ellipse cx='450' cy='1000' rx='1100' ry='430' fill='%235cc95c'/>\
-  </svg>") center/cover no-repeat fixed;
+  /* Background image is applied inline from Desktop.tsx to allow using Public URL assets */
   position: relative;
   overflow: hidden;
+}
+
+/* Theme variables (light default) */
+:root {
+  --tb-bg-start: #ECE9D8;
+  --tb-bg-end: #D4D0C8;
+  --tb-active-start: #0054E3;
+  --tb-active-end: #4A90E2;
+  --tray-bg-start: #D4D0C8;
+  --tray-bg-end: #ACA899;
+  --sm-bg: #ECE9D8;
+  --sm-header-start: #0054E3;
+  --sm-header-end: #4A90E2;
+  --sm-header-fg: #fff;
+}
+
+.theme-dark {
+  --tb-bg-start: #1f2937;
+  --tb-bg-end: #111827;
+  --tb-active-start: #2563eb;
+  --tb-active-end: #1d4ed8;
+  --tray-bg-start: #111827;
+  --tray-bg-end: #0b1220;
+  --sm-bg: #0f172a;
+  --sm-header-start: #1d4ed8;
+  --sm-header-end: #2563eb;
+  --sm-header-fg: #e5e7eb;
 }
 
 .desktop::before {

@@ -49,32 +49,17 @@ const LoadingScreen: React.FC = () => {
 
   return (
     <div className="loading-screen">
-      <div className="loading-content">
-        <div className="windows-logo">
-          <div className="logo-window">
-            <div className="window-pane"></div>
-            <div className="window-pane"></div>
-            <div className="window-pane"></div>
-            <div className="window-pane"></div>
+      <div className="xp-boot-area">
+        <div className="xp-boot-logo">Microsoft Windows XP</div>
+        <div className="xp-boot-bar">
+          <div className="xp-boot-dots">
+            <div className="xp-dot"></div>
+            <div className="xp-dot"></div>
+            <div className="xp-dot"></div>
           </div>
-          <div className="logo-text">Microsoft Windows XP</div>
         </div>
-        
-        {showText && (
-          <div className="loading-text">
-            <div className="step-text">{loadingSteps[currentStep]}</div>
-            <div className="progress-container">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(progress, 100)}%` }}
-                ></div>
-              </div>
-              <div className="progress-text">{Math.round(Math.min(progress, 100))}%</div>
-            </div>
-          </div>
-        )}
-        
+      </div>
+      <div className="loading-content">
         <div className="loading-footer">
           <div className="footer-text">Professional</div>
           <div className="footer-build">Build 2600</div>

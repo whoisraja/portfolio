@@ -1,0 +1,38 @@
+.terminal-root {
+  background: #0b0f14;
+  color: #e5e7eb;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.terminal-output {
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+}
+
+.line { line-height: 1.5; white-space: pre-wrap; }
+.command { color: #9ca3af; }
+
+.terminal-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #0f172a;
+  border-top: 1px solid #1f2937;
+}
+
+.prompt { color: #22d3ee; }
+.terminal-input input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: inherit;
+  outline: none;
+  font: inherit;
+}
+
+

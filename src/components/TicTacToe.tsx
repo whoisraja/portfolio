@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import './TicTacToe.css';
 
-type PlayerMark = 'X' | 'O' | null;
+type PlayerMark = 'X' | 'O';
+type CellValue = PlayerMark | null;
 
-const LINES: number[][] = [
+const winningLines: number[][] = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -14,87 +14,91 @@ const LINES: number[][] = [
   [2, 4, 6]
 ];
 
-const calculateWinner = (squares: PlayerMark[]): PlayerMark => {
-  for (const [a, b, c] of LINES) {
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+function calculateWinner(board: CellValue[]): PlayerMark | null {
+  for (const [a, b, c] of winningLines) {
+    const cellA = board[a];
+    if (cellA && cellA === board[b] && cellA === board[c]) {
+      return cellA;
     }
   }
   return null;
-};
+}
 
 const TicTacToe: React.FC = () => {
-  const [squares, setSquares] = useState<PlayerMark[]>(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState<boolean>(true);
-  const [scoreX, setScoreX] = useState<number>(0);
-  const [scoreO, setScoreO] = useState<number>(0);
+  const [board, setBoard] = useState<CellValue[]>(Array(9).fill(null));
+  const [isXNext, setIsXNext] = useState<boolean>(true);
 
-  const winner = useMemo(() => calculateWinner(squares), [squares]);
-  const isBoardFull = useMemo(() => squares.every(square => square !== null), [squares]);
-  const isDraw = !winner && isBoardFull;
+  const winner = useMemo(() => calculateWinner(board), [board]);
+  const isBoardFull = useMemo(() => board.every((c) => c !== null), [board]);
+  const currentPlayer: PlayerMark = isXNext ? 'X' : 'O';
 
-  const handleSquareClick = (index: number) => {
-    if (squares[index] || winner) {
-      return;
-    }
-    const nextSquares = squares.slice();
-    nextSquares[index] = xIsNext ? 'X' : 'O';
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
-
-    const nextWinner = calculateWinner(nextSquares);
-    if (nextWinner === 'X') {
-      setScoreX(prev => prev + 1);
-    } else if (nextWinner === 'O') {
-      setScoreO(prev => prev + 1);
-    }
+  const handleCellClick = (index: number) => {
+    if (board[index] || winner) return;
+    const updatedBoard = board.slice();
+    updatedBoard[index] = currentPlayer;
+    setBoard(updatedBoard);
+    setIsXNext((prev) => !prev);
   };
 
-  const handleResetBoard = () => {
-    setSquares(Array(9).fill(null));
-    setXIsNext(true);
+  const handleReset = () => {
+    setBoard(Array(9).fill(null));
+    setIsXNext(true);
   };
 
-  const handleResetScores = () => {
-    setScoreX(0);
-    setScoreO(0);
-    handleResetBoard();
-  };
-
-  const statusMessage = winner
+  const statusText = winner
     ? `Winner: ${winner}`
-    : isDraw
+    : isBoardFull
     ? 'Draw!'
-    : `Next player: ${xIsNext ? 'X' : 'O'}`;
+    : `Turn: ${currentPlayer}`;
+
+  const containerStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 12
+  };
+
+  const boardStyle: React.CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 80px)',
+    gridTemplateRows: 'repeat(3, 80px)',
+    gap: 6,
+    background: '#ACA899',
+    padding: 6,
+    borderRadius: 6
+  };
+
+  const cellStyle: React.CSSProperties = {
+    width: 80,
+    height: 80,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 28,
+    fontWeight: 700 as React.CSSProperties['fontWeight'],
+    background: '#ECE9D8',
+    border: '1px solid #ACA899',
+    borderRadius: 4,
+    cursor: winner ? 'default' : 'pointer',
+    userSelect: 'none'
+  };
 
   return (
-    <div className="ttt-container">
-      <div className="ttt-header">
-        <h3>Tic‑Tac‑Toe</h3>
-        <div className="ttt-scoreboard">
-          <div className="ttt-score"><span>Player X</span><strong>{scoreX}</strong></div>
-          <div className="ttt-score"><span>Player O</span><strong>{scoreO}</strong></div>
-        </div>
-      </div>
-
-      <div className="ttt-status">{statusMessage}</div>
-
-      <div className="ttt-board">
-        {squares.map((value, index) => (
+    <div style={containerStyle}>
+      <div style={{ fontWeight: 700 }}>{statusText}</div>
+      <div style={boardStyle}>
+        {board.map((value, idx) => (
           <button
-            key={index}
-            className={`ttt-square ${value ? 'filled' : ''}`}
-            onClick={() => handleSquareClick(index)}
+            key={idx}
+            onClick={() => handleCellClick(idx)}
+            style={cellStyle}
+            className="xp-button"
           >
             {value}
           </button>
         ))}
       </div>
-
-      <div className="ttt-actions">
-        <button className="xp-button" onClick={handleResetBoard}>New Round</button>
-        <button className="xp-button" onClick={handleResetScores}>Reset Scores</button>
-      </div>
+      <button onClick={handleReset} className="xp-button">Reset</button>
     </div>
   );
 };

@@ -56,8 +56,19 @@ const Window: React.FC<WindowProps> = ({
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging) {
-        const newX = e.clientX - dragOffset.x;
-        const newY = e.clientY - dragOffset.y;
+        const viewportWidth = globalThis.innerWidth;
+        const viewportHeight = globalThis.innerHeight - 30; // taskbar height
+        const width = window.size.width;
+        const height = window.size.height;
+        let newX = e.clientX - dragOffset.x;
+        let newY = e.clientY - dragOffset.y;
+        // Clamp so the titlebar stays accessible
+        const minX = -Math.max(0, width - 80);
+        const minY = 0;
+        const maxX = viewportWidth - 40;
+        const maxY = viewportHeight - 40;
+        newX = Math.min(Math.max(newX, minX), maxX);
+        newY = Math.min(Math.max(newY, minY), maxY);
         onMove(window.id, { x: newX, y: newY });
       }
       
