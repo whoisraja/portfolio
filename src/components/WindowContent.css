@@ -209,6 +209,46 @@
   padding: 3px 8px;
 }
 
+/* Certificates compact list */
+.cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cert-list-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  background: #FFFFFF;
+  border: 1px solid #ACA899;
+  border-radius: 4px;
+}
+
+.cert-thumb {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid #D4D0C8;
+  border-radius: 2px;
+  background: #F7F7F7;
+}
+
+.cert-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.cert-title {
+  font-size: 12px;
+  color: #0054E3;
+  font-weight: bold;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .skills-grid {

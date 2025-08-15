@@ -10,6 +10,15 @@ interface WindowContentProps {
 }
 
 const WindowContent: React.FC<WindowContentProps> = ({ content }) => {
+  const certificateImages = [
+    { title: 'DP‑900', file: '/certificates/dp-900.jpg' },
+    { title: 'IBM Cyber Security', file: '/certificates/ibm-cybersecurity.jpg' },
+    { title: '(CEH) SQL Injection Attack', file: '/certificates/ceh-sqli.jpg' },
+    { title: 'ISC2 ‑ CC', file: '/certificates/isc2-cc.jpg' }
+  ];
+
+  const certificateImagesSorted = [...certificateImages].sort((a, b) => a.title.localeCompare(b.title));
+
   const renderSkills = () => (
     <div className="content-section">
       <h3>Technical Skills</h3>
@@ -91,31 +100,24 @@ const WindowContent: React.FC<WindowContentProps> = ({ content }) => {
   const renderCertifications = () => (
     <div className="content-section">
       <h3>Certifications</h3>
-      <div className="certifications-list">
-        <div className="certification-item">
-          <div className="cert-icon">📄</div>
-          <div className="cert-details">
-            <h4>DP‑900</h4>
+      <div className="cert-list">
+        {certificateImagesSorted.map((cert) => (
+          <div className="cert-list-item" key={cert.title}>
+            <img
+              className="cert-thumb"
+              src={(process.env.PUBLIC_URL || '') + cert.file}
+              alt={cert.title}
+              loading="lazy"
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                img.outerHTML = '<div class="cert-image-missing">Image not found</div>';
+              }}
+            />
+            <div className="cert-meta">
+              <div className="cert-title">{cert.title}</div>
+            </div>
           </div>
-        </div>
-        <div className="certification-item">
-          <div className="cert-icon">📄</div>
-          <div className="cert-details">
-            <h4>IBM Cyber Security</h4>
-          </div>
-        </div>
-        <div className="certification-item">
-          <div className="cert-icon">📄</div>
-          <div className="cert-details">
-            <h4>(CEH) SQL Injection Attack</h4>
-          </div>
-        </div>
-        <div className="certification-item">
-          <div className="cert-icon">📄</div>
-          <div className="cert-details">
-            <h4>ISC2 ‑ CC</h4>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
